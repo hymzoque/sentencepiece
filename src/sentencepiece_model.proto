@@ -52,6 +52,7 @@ message TrainerSpec {
     BPE = 2;      // Byte Pair Encoding
     WORD = 3;     // Delimitered by whitespace.
     CHAR = 4;     // tokenizes into character sequence
+    BIGRAM = 5;
   }
   optional ModelType model_type = 3 [default = UNIGRAM];
 

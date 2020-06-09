@@ -115,6 +115,7 @@ inline std::string PrintProto(const TrainerSpec &message,
       {TrainerSpec::BPE, "BPE"},
       {TrainerSpec::WORD, "WORD"},
       {TrainerSpec::CHAR, "CHAR"},
+      {TrainerSpec::BIGRAM, "BIGRAM"},
   };
 
   PRINT_ENUM(model_type, kModelType_Map);
@@ -189,6 +190,7 @@ util::Status SentencePieceTrainer::SetProtoField(const std::string &name,
       {"BPE", TrainerSpec::BPE},
       {"WORD", TrainerSpec::WORD},
       {"CHAR", TrainerSpec::CHAR},
+      {"BIGRAM", TrainerSpec::BIGRAM},
   };
 
   PARSE_ENUM(model_type, kModelType_Map);

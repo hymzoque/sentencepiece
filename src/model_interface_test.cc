@@ -25,7 +25,7 @@ namespace {
 
 const std::vector<TrainerSpec::ModelType> kModelTypes = {
     TrainerSpec::UNIGRAM, TrainerSpec::BPE, TrainerSpec::WORD,
-    TrainerSpec::CHAR};
+    TrainerSpec::CHAR, TrainerSpec::BIGRAM};
 
 ModelProto MakeBaseModelProto(TrainerSpec::ModelType type,
                               bool byte_fallback = false) {

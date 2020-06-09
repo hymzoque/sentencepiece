@@ -158,6 +158,7 @@ bool TrainerSpec_ModelType_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+    case 5:
       return true;
     default:
       return false;
@@ -170,13 +171,15 @@ static const char TrainerSpec_ModelType_names[] =
   "BPE"
   "CHAR"
   "UNIGRAM"
-  "WORD";
+  "WORD"
+  "BIGRAM";
 
 static const ::PROTOBUF_NAMESPACE_ID::internal::EnumEntry TrainerSpec_ModelType_entries[] = {
   { {TrainerSpec_ModelType_names + 0, 3}, 2 },
   { {TrainerSpec_ModelType_names + 3, 4}, 4 },
   { {TrainerSpec_ModelType_names + 7, 7}, 1 },
   { {TrainerSpec_ModelType_names + 14, 4}, 3 },
+  { {TrainerSpec_ModelType_names + 18, 6}, 5 },
 };
 
 static const int TrainerSpec_ModelType_entries_by_number[] = {
@@ -184,6 +187,7 @@ static const int TrainerSpec_ModelType_entries_by_number[] = {
   0, // 2 -> BPE
   3, // 3 -> WORD
   1, // 4 -> CHAR
+  4, // 5 -> BIGRAM
 };
 
 const std::string& TrainerSpec_ModelType_Name(
@@ -216,6 +220,7 @@ constexpr TrainerSpec_ModelType TrainerSpec::UNIGRAM;
 constexpr TrainerSpec_ModelType TrainerSpec::BPE;
 constexpr TrainerSpec_ModelType TrainerSpec::WORD;
 constexpr TrainerSpec_ModelType TrainerSpec::CHAR;
+constexpr TrainerSpec_ModelType TrainerSpec::BIGRAM;
 constexpr TrainerSpec_ModelType TrainerSpec::ModelType_MIN;
 constexpr TrainerSpec_ModelType TrainerSpec::ModelType_MAX;
 constexpr int TrainerSpec::ModelType_ARRAYSIZE;
