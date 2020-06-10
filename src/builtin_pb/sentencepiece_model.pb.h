@@ -86,11 +86,12 @@ enum TrainerSpec_ModelType : int {
   TrainerSpec_ModelType_UNIGRAM = 1,
   TrainerSpec_ModelType_BPE = 2,
   TrainerSpec_ModelType_WORD = 3,
-  TrainerSpec_ModelType_CHAR = 4
+  TrainerSpec_ModelType_CHAR = 4,
+  TrainerSpec_ModelType_BIGRAM = 5
 };
 bool TrainerSpec_ModelType_IsValid(int value);
 constexpr TrainerSpec_ModelType TrainerSpec_ModelType_ModelType_MIN = TrainerSpec_ModelType_UNIGRAM;
-constexpr TrainerSpec_ModelType TrainerSpec_ModelType_ModelType_MAX = TrainerSpec_ModelType_CHAR;
+constexpr TrainerSpec_ModelType TrainerSpec_ModelType_ModelType_MAX = TrainerSpec_ModelType_BIGRAM;
 constexpr int TrainerSpec_ModelType_ModelType_ARRAYSIZE = TrainerSpec_ModelType_ModelType_MAX + 1;
 
 const std::string& TrainerSpec_ModelType_Name(TrainerSpec_ModelType value);
@@ -239,6 +240,8 @@ class TrainerSpec PROTOBUF_FINAL :
     TrainerSpec_ModelType_WORD;
   static constexpr ModelType CHAR =
     TrainerSpec_ModelType_CHAR;
+  static constexpr ModelType BIGRAM =
+    TrainerSpec_ModelType_BIGRAM;
   static inline bool ModelType_IsValid(int value) {
     return TrainerSpec_ModelType_IsValid(value);
   }

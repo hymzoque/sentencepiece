@@ -88,6 +88,7 @@ set(SPM_SRCS
   model_interface.h
   testharness.h
   unigram_model.h
+  bigram_model.h
   bpe_model.cc
   char_model.cc
   error.cc
@@ -98,6 +99,7 @@ set(SPM_SRCS
   normalizer.cc
   sentencepiece_processor.cc
   unigram_model.cc
+  bigram_model.cc
   util.cc
   word_model.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/absl/strings/string_view.cc
@@ -113,6 +115,7 @@ set(SPM_TRAIN_SRCS
   trainer_factory.h
   trainer_interface.h
   unigram_model_trainer.h
+  bigram_model_trainer.h
   word_model_trainer.h
   char_model_trainer.h
   bpe_model_trainer.h
@@ -123,6 +126,7 @@ set(SPM_TRAIN_SRCS
   trainer_factory.cc
   trainer_interface.cc
   unigram_model_trainer.cc
+  bigram_model_trainer.cc
   word_model_trainer.cc
   char_model_trainer.cc
   bpe_model_trainer.cc
@@ -152,6 +156,8 @@ set(SPM_TEST_SRCS
   unicode_script_test.cc
   unigram_model_test.cc
   unigram_model_trainer_test.cc
+  bigram_model_test.cc
+  bigram_model_trainer_test.cc
   util_test.cc
   word_model_test.cc
   word_model_trainer_test.cc

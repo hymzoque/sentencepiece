@@ -17,6 +17,7 @@
 #include "third_party/absl/memory/memory.h"
 #include "trainer_factory.h"
 #include "unigram_model_trainer.h"
+#include "bigram_model_trainer.h"
 #include "word_model_trainer.h"
 
 namespace sentencepiece {
@@ -42,6 +43,9 @@ std::unique_ptr<TrainerInterface> TrainerFactory::Create(
       return absl::make_unique<character::Trainer>(
           trainer_spec, normalizer_spec, denormalizer_spec);
       break;
+    case TrainerSpec::BIGRAM:
+      return absl::make_unique<bigram::Trainer>(
+          trainer_spec, normalizer_spec, denormalizer_spec);
     default:
       LOG(FATAL) << "Unknown model_type: " << trainer_spec.model_type();
       break;

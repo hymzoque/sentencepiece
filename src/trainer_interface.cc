@@ -53,6 +53,7 @@ util::Status VerifySpec(const TrainerSpec &trainer_spec) {
   CHECK_GT_OR_RETURN(trainer_spec.vocab_size(), 0);
 
   if (trainer_spec.model_type() == TrainerSpec::UNIGRAM ||
+      trainer_spec.model_type() == TrainerSpec::BIGRAM ||
       trainer_spec.model_type() == TrainerSpec::BPE) {
     CHECK_OR_RETURN(!trainer_spec.use_all_vocab())
         << "--use_all_vocab=true is valid for WORD/CHAR model.";

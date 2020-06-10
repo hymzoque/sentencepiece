@@ -48,5 +48,11 @@ TEST(TrainerFactoryTest, BasicTest) {
     auto m = TrainerFactory::Create(trainer_spec, normalizer_spec,
                                     denormalizer_spec);
   }
+
+  {
+    trainer_spec.set_model_type(TrainerSpec::BIGRAM);
+    auto m = TrainerFactory::Create(trainer_spec, normalizer_spec,
+                                    denormalizer_spec);
+  }
 }
 }  // namespace sentencepiece
