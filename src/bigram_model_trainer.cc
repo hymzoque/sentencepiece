@@ -145,6 +145,7 @@ TrainerModel::SentencePieces Trainer::MakeSeedSentencePieces() const {
     }
     const char32 *begin = &array[0] + offset;
     const char32 *end = &array[0] + offset + len;
+    // clean
     // Skips if a substring contains a sentence boundary.
     if (std::find(begin, end, kSentenceBoundary) != end) {
       continue;
@@ -156,7 +157,7 @@ TrainerModel::SentencePieces Trainer::MakeSeedSentencePieces() const {
 
     // character-wise coverage is the default score.
     const node_int_type freq = R[i] - L[i];
-    const node_int_type score = freq * len;
+    const node_int_type score = freq * len; // char level freq
     substr_index.emplace_back(i, score);
   }
 
@@ -167,6 +168,7 @@ TrainerModel::SentencePieces Trainer::MakeSeedSentencePieces() const {
   }
 
   // Sort by the coverage of sub strings.
+  // choose the top sentencepieces
   for (const auto &p : Sorted(substr_index)) {
     const node_int_type offset = SA[L[p.first]];
     const node_int_type len = D[p.first];
@@ -183,7 +185,7 @@ TrainerModel::SentencePieces Trainer::MakeSeedSentencePieces() const {
     CHECK(!port::ContainsKey(all_chars, w));
     seed_sentencepieces.emplace_back(w, p.second);
   }
-
+  // log and normalized
   ToLogProb(seed_sentencepieces.begin(), seed_sentencepieces.end());
 
   LOG(INFO) << "Initialized " << seed_sentencepieces.size()
@@ -487,7 +489,8 @@ util::Status Trainer::Train() {
 
   while (true) {
     // Sub-EM iteration.
-    for (int iter = 0; iter < trainer_spec_.num_sub_iterations(); ++iter) {
+    // for (int iter = 0; iter < trainer_spec_.num_sub_iterations(); ++iter) {
+    for (int iter = 0; iter < 1; ++iter) { // makes sub_iter == 1
       // Executes E step
       float objective = 0.0;
       int64 num_tokens = 0;

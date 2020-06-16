@@ -187,7 +187,7 @@ float Lattice::PopulateMarginal(float freq,
 
   const int len = size();
 
-  // alpha and beta (accumulative log prob) in Forward Backward.
+  // alpha and beta (log accumulative log prob) in Forward Backward paths.
   // the index of alpha/beta is Node::node_id.
   std::vector<float> alpha(node_allocator_.size(), 0.0);
   std::vector<float> beta(node_allocator_.size(), 0.0);
@@ -212,6 +212,8 @@ float Lattice::PopulateMarginal(float freq,
     }
   }
 
+  // begin_nodes_[len][0] is the eos
+  // Z is log sum (log prob of all forward paths)
   const float Z = alpha[begin_nodes_[len][0]->node_id];
   for (int pos = 0; pos < len; ++pos) {
     for (Node *node : begin_nodes_[pos]) {
@@ -219,12 +221,14 @@ float Lattice::PopulateMarginal(float freq,
         // the index of |expected| is a Node::id, which is a vocabulary id.
         (*expected)[node->id] +=
             freq *
+            // alpha + score + beta is the log sum (log prob of all paths through the node)
+            // expect sum is normalized by len, sum(expected) = freq * len (at the beginning)
             std::exp(static_cast<double>(alpha[node->node_id] + node->score +
                                          beta[node->node_id] - Z));
       }
     }
   }
-
+  // TODO understand
   return freq * Z;
 }
 

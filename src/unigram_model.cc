@@ -153,6 +153,7 @@ std::vector<Lattice::Node *> Lattice::Viterbi() {
       rnode->prev = nullptr;
       float best_score = 0.0;
       Node *best_node = nullptr;
+      // seek best from the left nodes behind rnode
       for (Node *lnode : end_nodes_[pos]) {
         const float score = lnode->backtrace_score + rnode->score;
         if (best_node == nullptr || score > best_score) {
@@ -165,7 +166,7 @@ std::vector<Lattice::Node *> Lattice::Viterbi() {
         return {};
       }
       rnode->prev = best_node;
-      rnode->backtrace_score = best_score;
+      rnode->backtrace_score = best_score; // accumulate score
     }
   }
 
@@ -224,7 +225,8 @@ float Lattice::PopulateMarginal(float freq,
       }
     }
   }
-
+  // sum = freq * len (at first time)
+  std::cout << std::to_string(len) + ' ' + std::to_string(freq) + ' ' + std::to_string(std::accumulate((*expected).begin(), (*expected).end(), 0.0f)) + ' ' + std::to_string(freq * Z) + ';' << std::endl;
   return freq * Z;
 }
 
@@ -237,6 +239,8 @@ std::vector<std::vector<Lattice::Node *>> Lattice::NBest(size_t nbest_size) {
   if (nbest_size == 1) {
     return {Viterbi()};
   }
+
+  // enumerate
 
   // Uses A* search to enumerate N-bests.
   // Given a lattice, enumerates hypotheses (paths) from EOS.
@@ -409,6 +413,7 @@ void Model::PopulateNodes(Lattice *lattice) const {
       Lattice::Node *node = lattice->Insert(begin_pos, length);
       node->id = id;  // the value of Trie stores vocab_id.
       // User defined symbol receives extra bonus to always be selected.
+      // score of node is initialized by the log prob of subword
       node->score = IsUserDefinedInlined(id) ? (length * max_score_ - 0.1)
                                              : GetScoreInlined(id);
       if (!has_single_node && node->length == 1) {
